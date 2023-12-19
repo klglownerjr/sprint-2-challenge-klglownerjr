@@ -6,33 +6,78 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+    if (profile.active) {
+        if (!reason) {
+            return "confirm status manually";
+        }
+        profile.active = false;
+        profile.reason = reason;
+    } else {
+        profile.active = true;
+        delete profile.reason;
     }
+    return profile;
+}
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+    let adjustedX = x - 1;
+    let adjustedY = y - 1;
 
+    if (adjustedX < 0 || adjustedX > 2 || adjustedY < 0 || adjustedY > 2) {
+        return "invalid coordinates";
     }
+
+    if (grid[adjustedY][adjustedX] === "🟥") {
+        return "🟥 💀";
+    } else if (grid[adjustedY][adjustedX] === "🟦") {
+        return "🟦 🥳";
+    }
+}
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (key.length > 9) {
+                return "shorten all prop names to 9 chars or less";
+            }
+            if (obj[key] === 0) {
+                obj[key] = false;
+            } else if (obj[key] === 1) {
+                obj[key] = true;
+            } else if (obj[key] === null) {
+                delete obj[key];
+            }
+        }
     }
+    return obj;
+}
 
-    // 👉 CHALLENGE 4
+    //👉CHALLENGE 4
     function scrub(text, forbidden) {
-
-    }
+    forbidden.forEach(word => {
+        
+        let regex = new RegExp("\\b" + word + "\\b", "gi");
+  
+        text = text.replace(regex, "x".repeat(word.length));
+    });
+    return text;
+}
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
-
+      return `(${num.slice(0, 3)}) ${num.slice(3, 6)}-${num.slice(6, 10)}`;
     }
+
+    console.log(normalizePhoneNumber("1234567890"));
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
-
+      return Math.floor(Math.random() * 6) + 1;
     }
+
+    console.log(diceRolls());
 
     // 🧪 DO NOT make any changes below this line ===================
     globalThis.challengeVersion = 1
